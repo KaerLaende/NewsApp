@@ -2,11 +2,15 @@ package com.github.KaerLaende.NewsApp.mapper;
 
 import com.github.KaerLaende.NewsApp.DTO.CategoryDto;
 import com.github.KaerLaende.NewsApp.entity.Category;
+import org.mapstruct.*;
+
+import java.util.List;
+
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.MappingConstants.ComponentModel;
 
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Mapper(componentModel = ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CategoryMapper {
 
     /**
@@ -19,5 +23,9 @@ public interface CategoryMapper {
      */
     CategoryDto categoryToCategoryDto(Category category);
 
+    /**
+     * Сопоставляет список объектов {@link Category} в список CategoryDto
+     */
+    List<CategoryDto> toCategoryDtoList(List<Category> categoryList);
 
 }

@@ -9,4 +9,6 @@ public class NewsNotFoundException extends RuntimeException{
 public NewsNotFoundException(){
 super("News not found");
 }
+
+public NewsNotFoundException(long id){ super("News not found"+id);}
 }

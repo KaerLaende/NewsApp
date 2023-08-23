@@ -1,25 +1,49 @@
 package com.github.KaerLaende.NewsApp.mapper;
 
-import com.github.KaerLaende.NewsApp.DTO.CreateNewsDto;
-import com.github.KaerLaende.NewsApp.DTO.EditNewsContentDto;
+import com.github.KaerLaende.NewsApp.DTO.*;
 import com.github.KaerLaende.NewsApp.entity.News;
 import org.mapstruct.*;
 
-
+import java.util.List;
 
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface NewsMapper {
 
     /**
+     * Для создании новости.
      * Сопоставляет объект {@link CreateNewsDto} в объект {@link News}
      */
+    @Mapping(target = "category", source = "createNewsDto.categoryDto")
     News createNewsDtoToNews(CreateNewsDto createNewsDto);
 
     /**
-     * Сопоставляет объект {@link EditNewsContentDto} в объект {@link News}
+     * Для отправки в контроллер изменений в новости
+     * Сопоставляет объект {@link EditNewsDto} в объект {@link News}
      */
-    News editNewsContentDtoToNews(EditNewsContentDto editNewsContentDto);
+    EditNewsDto newsToEditNewsDto(News news);
+
+    /**
+     * Для отправки в контроллер краткой информации об удаленной новости.
+     * Сопоставляет объект {@link News} в объект {@link DeleteNewsDto}
+     */
+    @Mapping(target = "localDate", source = "publishDate")
+    DeleteNewsDto NewsToDeleteNewsDto(News news);
+
+    /**
+     * Для запросов к новости.
+     * Сопоставляет объект {@link News} в объект {@link DeleteNewsDto}
+     */
+    @Mapping(target = "category", source = "category.categoryName")
+    NewsDto newsToNewsDto(News news);
+
+
+    /**
+     * Для списка новостей.
+     * Сопоставляет список объектов {@link News} и их количество в объект {@link ResponseWrapperNewsDto}
+     */
+    ResponseWrapperNewsDto listNewsToNewsDto (int count, List<News> results);
+
 
 
 }

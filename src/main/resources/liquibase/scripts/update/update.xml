@@ -5,45 +5,36 @@
 
     <changeSet id="insert_categories" author="Kaer">
         <insert tableName="category">
-            <column name="id" valueNumeric="1"/>
-            <column name="categoryName" value="JAVA"/>
+            <column name="category_name" value="JAVA"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="2"/>
-            <column name="categoryName" value="Python"/>
+            <column name="category_name" value="Python"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="3"/>
-            <column name="categoryName" value="JavaScript"/>
+            <column name="category_name" value="JavaScript"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="4"/>
-            <column name="categoryName" value="CPlusPlus"/>
+            <column name="category_name" value="CPlusPlus"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="5"/>
-            <column name="categoryName" value="CSharp"/>
+            <column name="category_name" value="CSharp"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="6"/>
-            <column name="categoryName" value="PHP"/>
+            <column name="category_name" value="PHP"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="7"/>
-            <column name="categoryName" value="Ruby"/>
+            <column name="category_name" value="Ruby"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="8"/>
-            <column name="categoryName" value="Kotlin"/>
+            <column name="category_name" value="Kotlin"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="9"/>
-            <column name="categoryName" value="Swift"/>
+            <column name="category_name" value="Swift"/>
         </insert>
         <insert tableName="category">
-            <column name="id" valueNumeric="10"/>
-            <column name="categoryName" value="Go"/>
+            <column name="category_name" value="Go"/>
         </insert>
     </changeSet>
+
 
 </databaseChangeLog>
