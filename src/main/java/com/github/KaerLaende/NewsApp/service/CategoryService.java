@@ -1,5 +1,6 @@
 package com.github.KaerLaende.NewsApp.service;
 import com.github.KaerLaende.NewsApp.DTO.CategoryDto;
+import com.github.KaerLaende.NewsApp.DTO.CreateCategoryDto;
 
 import java.util.List;
 
@@ -9,22 +10,25 @@ import java.util.List;
  * которые используются для взаимодействия с базой данных и маппинга объектов категорий.
  */
 public interface CategoryService {
+    /**
+     * добавляет новую категорию с указанным названием и возвращает объект  CategoryDto  новой категории.
+     */
+    CategoryDto addCategory(CreateCategoryDto createCategoryDto);
+
 
     /**
      * возвращает список всех категорий новостей в виде объектов  CategoryDto
      */
     List<CategoryDto> findAllCategory();
 
-    /**
-     * добавляет новую категорию с указанным названием и возвращает объект  CategoryDto  новой категории.
-     */
-    CategoryDto addCategory(String categoryName);
+
 
     /**
      * редактирует категорию с указанным идентификатором, меняя ее название на указанное, и возвращает объект CategoryDto  отредактированной категории.
      * Если категория с указанным идентификатором не найдена, выбрасывается исключение CategoryNotFoundException.
      */
-    CategoryDto editCategory(long id, String categoryName);
+
+    CategoryDto editCategory(long id, CreateCategoryDto createCategoryDto);
 
     /**
      *  удаляет категорию с указанным идентификатором и возвращает объект  CategoryDto  удаленной категории.

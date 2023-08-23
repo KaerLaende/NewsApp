@@ -15,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
@@ -31,6 +30,8 @@ class NewsServiceTest {
 
     @Mock
     private NewsRepository newsRepository;
+    @Mock
+    private CategoryService categoryService;
 
     @Mock
     private NewsMapper newsMapper;
@@ -85,6 +86,7 @@ class NewsServiceTest {
         // Assert
         Assertions.assertEquals(newsDto, result);
         verify(newsRepository, times(1)).save(news);
+        verify(categoryService, times(1)).checkCategoryExists(categoryDto);
         verify(newsMapper, times(1)).newsToNewsDto(news);
     }
 
@@ -119,7 +121,7 @@ class NewsServiceTest {
         when(newsMapper.newsToEditNewsDto(news)).thenReturn(editNewsDto);
 
         // Act
-        EditNewsDto result = newsService.editNews(ID, TITLE, CONTENT);
+        EditNewsDto result = newsService.editNews(ID, editNewsDto);
 
         // Assert
         Assertions.assertEquals(editNewsDto, result);
@@ -133,7 +135,7 @@ class NewsServiceTest {
         when(newsRepository.findById(ID)).thenReturn(Optional.empty());
 
         // Act & Assert
-        Assertions.assertThrows(NewsNotFoundException.class, () -> newsService.editNews(ID, TITLE, CONTENT));
+        Assertions.assertThrows(NewsNotFoundException.class, () -> newsService.editNews(ID, editNewsDto));
         verify(newsRepository, times(1)).findById(ID);
         verify(newsMapper, never()).newsToEditNewsDto(any(News.class));
     }

@@ -6,29 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     /**
-     * Метод написан используя параметр @Query сортированный по id
+     * Метод написан используя ключевые слова для сортировке по id
      * @return сортированный список категорий
      */
-    @Query(value = "select * from category order by id", nativeQuery = true)
-    List<Category> findAllCategory();
+    List<Category> findAllByOrderByIdDesc();
 
-    /**
-     * Метод для поиска категории по id
-     * @param id идентификатор категории
-     * @return найденная категория
-     */
-    Optional<Category> findById(Long id);
-
-    /**
-     * Метод для удаления категории по id
-     * @param id идентификатор категории
-     */
-    void deleteById(Long id);
 
 }

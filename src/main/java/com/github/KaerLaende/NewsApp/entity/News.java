@@ -19,11 +19,10 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min = 2, max = 30, message = "Заголовок новости должно содержать от 2 до 30 символов")
     private String title;
-    @NotBlank
+
     private String content;
-    @NotNull
+
     private LocalDate publishDate;
 
     @ManyToOne

@@ -27,7 +27,7 @@ public interface NewsService {
      * EditNewsDto отредактированной новости. Если новость с указанным идентификатором не найдена,
      * выбрасывается исключение NewsNotFoundException.
      */
-    EditNewsDto editNews(long id, String title, String content);
+    EditNewsDto editNews(long id, EditNewsDto editNewsDto);
 
     /**
      * удаляет новость с указанным идентификатором и возвращает объект NewsDto удаленной новости.

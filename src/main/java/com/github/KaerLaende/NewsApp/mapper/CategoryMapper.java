@@ -1,6 +1,7 @@
 package com.github.KaerLaende.NewsApp.mapper;
 
 import com.github.KaerLaende.NewsApp.DTO.CategoryDto;
+import com.github.KaerLaende.NewsApp.DTO.CreateCategoryDto;
 import com.github.KaerLaende.NewsApp.entity.Category;
 import org.mapstruct.*;
 
@@ -16,7 +17,7 @@ public interface CategoryMapper {
     /**
      * Сопоставляет объект {@link CategoryDto} в объект {@link Category}
      */
-    Category categoryDtoToCategory(CategoryDto categoryDto);
+    Category createCategoryDtoToCategory(CreateCategoryDto categoryDto);
 
     /**
      * Сопоставляет объект {@link Category} в объект {@link CategoryDto}

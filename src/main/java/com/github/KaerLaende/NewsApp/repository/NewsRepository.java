@@ -13,20 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface NewsRepository extends JpaRepository<News, Integer>, JpaSpecificationExecutor<News> {
-
-    /**
-     * Метод написан используя параметр @Query сортированный по id,
-     * так что бы сначало показывались последние новости
-     *
-     * @return сортированная новостная лента
-     */
-    @Query(value = "select * from news order by id desc", nativeQuery = true)
-    List<News> findAllNews();
-
-    Optional<News> findById(Long id);
-
-    void deleteById(Long id);
+public interface NewsRepository extends JpaRepository<News, Long>, JpaSpecificationExecutor<News> {
 
 
     /**

@@ -5,6 +5,7 @@ import com.github.KaerLaende.NewsApp.entity.News;
 import com.github.KaerLaende.NewsApp.exception.NewsNotFoundException;
 import com.github.KaerLaende.NewsApp.mapper.NewsMapper;
 import com.github.KaerLaende.NewsApp.repository.NewsRepository;
+import com.github.KaerLaende.NewsApp.service.CategoryService;
 import com.github.KaerLaende.NewsApp.service.NewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,17 @@ import static com.github.KaerLaende.NewsApp.repository.NewsRepository.Specs.*;
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
+    private final CategoryService categoryService;
+
     private final NewsMapper newsMapper;
 
     @Override
     public NewsDto addNews(CreateNewsDto createNewsDto) {
+        //проверка на существовании категории. Если неудачно - исключение.
+        categoryService.checkCategoryExists(createNewsDto.categoryDto());
         News news = newsMapper.createNewsDtoToNews(createNewsDto);
         news.setPublishDate(LocalDate.now());
-        log.info("создается новость:" + news);
+        log.trace("создается новость:" + news);
         newsRepository.save(news);
         return newsMapper.newsToNewsDto(news);
     }
@@ -44,15 +49,15 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public EditNewsDto editNews(long id, String title, String content) {
+    public EditNewsDto editNews(long id, EditNewsDto editNewsDto) {
         Optional<News> optionalNews = newsRepository.findById(id);
         if (optionalNews.isPresent()) {
             News news = optionalNews.get();
-            if (title != null) {
-                news.setTitle(title);
+            if (editNewsDto.getTitle() != null) {
+                news.setTitle(editNewsDto.getTitle());
             }
-            if (content != null) {
-                news.setContent(content);
+            if (editNewsDto.getContent() != null) {
+                news.setContent(editNewsDto.getContent());
             }
             return newsMapper.newsToEditNewsDto(news);
         } else {
@@ -63,7 +68,7 @@ public class NewsServiceImpl implements NewsService {
 @Override
     public NewsDto deleteNews(long id){
         News news= newsRepository.findById(id).orElseThrow(NewsNotFoundException::new);
-        log.info("Удаление новости с id = {}", id);
+        log.trace("Удаление новости с id = {}", id);
         NewsDto newsDto = newsMapper.newsToNewsDto(news);
         newsRepository.deleteById(id);
         return newsDto;

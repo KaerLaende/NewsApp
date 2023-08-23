@@ -2,7 +2,6 @@ package com.github.KaerLaende.NewsApp.controller;
 
 
 import com.github.KaerLaende.NewsApp.DTO.*;
-import com.github.KaerLaende.NewsApp.exception.CategoryNotFoundException;
 import com.github.KaerLaende.NewsApp.service.CategoryService;
 import com.github.KaerLaende.NewsApp.service.NewsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,15 +11,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Description;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -56,25 +51,9 @@ public class NewsController {
             @ApiResponse(responseCode = "403")
     })
     public ResponseEntity<NewsDto> createNews(
-            @RequestParam("title") @Valid @NotNull @NotBlank @Size(min = 3, max = 30) String title,
-            @RequestParam("content") @Valid @NotNull @NotBlank @Size(min = 3) String content,
-            @RequestBody CategoryDto categoryDto,
-            Model model // заготовка для выпадающего списка со всеми Категориями
+            @Valid @RequestBody CreateNewsDto createNewsDto
     ) {
-        log.info("Отправлен запрос на создание новости");
-
-        // Передача списка категорий в представление,
-        // ожидается что категорию будут выбирать из списка и вкладывать в requestBody
-        model.addAttribute("categories", categoryService.findAllCategory());
-
-        if (!categoryService.checkCategoryExists(categoryDto)) {
-            String info = "Введенной категории- " + categoryDto.getCategoryName() + "не найдено в базе";
-            log.info(info);
-            throw new CategoryNotFoundException("Такой категории нет, вы можете её добавить самостоятельно");
-        }
-
-        CreateNewsDto createNewsDto = new CreateNewsDto(title, content, categoryDto);
-
+        log.trace("Отправлен запрос на создание новости");
         return ResponseEntity.ok(newsService.addNews(createNewsDto));
     }
 
@@ -93,32 +72,32 @@ public class NewsController {
     ) {
         ResponseWrapperNewsDto responseWrapper = newsService.getFilteredNews(category, name, content);
         List<NewsDto> newsDtoList = responseWrapper.getResults();
-        log.info("запрос на отображение всех новостей");
+        log.trace("запрос на отображение всех новостей");
         int totalCount = newsDtoList.size();
         int start = page * pageSize;
         int end = Math.min(start + pageSize, totalCount);
         List<NewsDto> subList = newsDtoList.subList(start, end);
-        log.info("вывод подлиста" + subList);
+        log.trace("вывод подлиста" + subList);
         return subList;
     }
+
     @Operation(
             summary = "Отредактировать контент и заголовок новости",
             description = "Возможно изменить конект и (или) заголовок новости")
     @PatchMapping("{id}")
     public ResponseEntity<EditNewsDto> editNewsContent(
             @PathVariable("id") long id,
-            @RequestParam(required = false, name = "title") @Valid @Size(min = 2, max = 30) String title,
-            @RequestParam(required = false, name = "content") @Valid @Size(min = 2) String content
+            @Valid @RequestBody EditNewsDto editNewsDto
     ) {
-        log.info("Запрос на редактирование новостей");
-        return ResponseEntity.ok(newsService.editNews(id, title, content));
+        log.trace("Запрос на редактирование новостей");
+        return ResponseEntity.ok(newsService.editNews(id, editNewsDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить новость по id")
 
     public ResponseEntity<NewsDto> deleteNews(@PathVariable("id") long id) {
-        log.info("Удаление категории с id = {}", id);
+        log.trace("Удаление категории с id = {}", id);
         categoryService.deleteCategory(id);
         return ResponseEntity.ok().build();
     }

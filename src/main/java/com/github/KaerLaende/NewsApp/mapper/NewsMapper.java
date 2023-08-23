@@ -23,16 +23,11 @@ public interface NewsMapper {
      */
     EditNewsDto newsToEditNewsDto(News news);
 
-    /**
-     * Для отправки в контроллер краткой информации об удаленной новости.
-     * Сопоставляет объект {@link News} в объект {@link DeleteNewsDto}
-     */
-    @Mapping(target = "localDate", source = "publishDate")
-    DeleteNewsDto NewsToDeleteNewsDto(News news);
+
 
     /**
      * Для запросов к новости.
-     * Сопоставляет объект {@link News} в объект {@link DeleteNewsDto}
+     * Сопоставляет объект {@link News} в объект {@link NewsDto}
      */
     @Mapping(target = "category", source = "category.categoryName")
     NewsDto newsToNewsDto(News news);

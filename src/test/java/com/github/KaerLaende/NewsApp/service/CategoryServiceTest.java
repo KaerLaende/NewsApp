@@ -1,6 +1,7 @@
 package com.github.KaerLaende.NewsApp.service;
 
 import com.github.KaerLaende.NewsApp.DTO.CategoryDto;
+import com.github.KaerLaende.NewsApp.DTO.CreateCategoryDto;
 import com.github.KaerLaende.NewsApp.entity.Category;
 import com.github.KaerLaende.NewsApp.exception.CategoryNotFoundException;
 import com.github.KaerLaende.NewsApp.mapper.CategoryMapper;
@@ -33,10 +34,11 @@ class CategoryServiceTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
-    private static final Category CATEGORY_1 = new Category();
-    private static final CategoryDto CATEGORY_1_DTO = new CategoryDto();
     private static final Long ID = 1L;
     private static final String NAME = "Category 1";
+    private static final Category CATEGORY_1 = new Category();
+    private static final CategoryDto CATEGORY_1_DTO = new CategoryDto();
+    private static final CreateCategoryDto CREATE_CATEGORY_DTO = new CreateCategoryDto(NAME);
 
     @BeforeEach
     void setUp() {
@@ -53,7 +55,7 @@ class CategoryServiceTest {
         categories.add(CATEGORY_1);
         List<CategoryDto> categoryDtoList = new ArrayList<>();
         categoryDtoList.add(CATEGORY_1_DTO);
-        when(categoryRepository.findAllCategory()).thenReturn(categories);
+        when(categoryRepository.findAllByOrderByIdDesc()).thenReturn(categories);
         when(categoryMapper.toCategoryDtoList(categories)).thenReturn(categoryDtoList);
 
         // Act
@@ -61,7 +63,7 @@ class CategoryServiceTest {
 
         // Assert
         Assertions.assertEquals(categories.size(), result.size());
-        verify(categoryRepository, times(1)).findAllCategory();
+        verify(categoryRepository, times(1)).findAllByOrderByIdDesc();
         verify(categoryMapper, times(1)).toCategoryDtoList(categories);
     }
 
@@ -69,11 +71,12 @@ class CategoryServiceTest {
     void testAddCategory() {
         // Arrange
         CategoryDto expectedCategoryDto = CATEGORY_1_DTO;
+        when(categoryMapper.createCategoryDtoToCategory(CREATE_CATEGORY_DTO)).thenReturn(CATEGORY_1);
         when(categoryRepository.saveAndFlush(any(Category.class))).thenReturn(CATEGORY_1);
         when(categoryMapper.categoryToCategoryDto(any(Category.class))).thenReturn(expectedCategoryDto);
 
         // Act
-        CategoryDto result = categoryService.addCategory(NAME);
+        CategoryDto result = categoryService.addCategory(CREATE_CATEGORY_DTO);
 
         // Assert
         Assertions.assertEquals(expectedCategoryDto, result);
@@ -89,7 +92,7 @@ class CategoryServiceTest {
         when(categoryMapper.categoryToCategoryDto(any(Category.class))).thenReturn(expectedCategoryDto);
 
         // Act
-        CategoryDto result = categoryService.editCategory(ID, NAME);
+        CategoryDto result = categoryService.editCategory(ID, CREATE_CATEGORY_DTO);
 
         // Assert
         Assertions.assertEquals(expectedCategoryDto, result);
@@ -104,7 +107,7 @@ class CategoryServiceTest {
         when(categoryRepository.findById(ID)).thenReturn(Optional.empty());
 
         // Act & Assert
-        Assertions.assertThrows(CategoryNotFoundException.class, () -> categoryService.editCategory(ID, NAME));
+        Assertions.assertThrows(CategoryNotFoundException.class, () -> categoryService.editCategory(ID, CREATE_CATEGORY_DTO));
         verify(categoryRepository, times(1)).findById(ID);
         verify(categoryMapper, never()).categoryToCategoryDto(any(Category.class));
     }
@@ -146,14 +149,14 @@ class CategoryServiceTest {
         categoryDto.setCategoryName(NAME);
         List<Category> categories = new ArrayList<>();
         categories.add(CATEGORY_1);
-        when(categoryRepository.findAllCategory()).thenReturn(categories);
+        when(categoryRepository.findAllByOrderByIdDesc()).thenReturn(categories);
 
         // Act
         boolean result = categoryService.checkCategoryExists(categoryDto);
 
         // Assert
         Assertions.assertTrue(result);
-        verify(categoryRepository, times(1)).findAllCategory();
+        verify(categoryRepository, times(1)).findAllByOrderByIdDesc();
     }
 
     @Test
@@ -163,13 +166,13 @@ class CategoryServiceTest {
         categoryDto.setId(ID);
         categoryDto.setCategoryName(NAME);
         List<Category> categories = new ArrayList<>();
-        when(categoryRepository.findAllCategory()).thenReturn(categories);
+        when(categoryRepository.findAllByOrderByIdDesc()).thenReturn(categories);
 
         // Act
         boolean result = categoryService.checkCategoryExists(categoryDto);
 
         // Assert
         Assertions.assertFalse(result);
-        verify(categoryRepository, times(1)).findAllCategory();
+        verify(categoryRepository, times(1)).findAllByOrderByIdDesc();
     }
 }

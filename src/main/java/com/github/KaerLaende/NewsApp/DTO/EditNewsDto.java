@@ -1,5 +1,7 @@
 package com.github.KaerLaende.NewsApp.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -7,7 +9,8 @@ import lombok.Data;
  */
 @Data
 public class EditNewsDto {
-    private long id;
+    @Size(min = 2, max = 30, message = "Заголовок новости должно содержать от 2 до 30 символов")
     private String title;
+    @NotBlank
     private String content;
 }
