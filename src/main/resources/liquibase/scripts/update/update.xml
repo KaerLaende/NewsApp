@@ -1,0 +1,40 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="insert_categories" author="Kaer">
+        <insert tableName="category">
+            <column name="category_name" value="JAVA"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="Python"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="JavaScript"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="CPlusPlus"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="CSharp"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="PHP"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="Ruby"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="Kotlin"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="Swift"/>
+        </insert>
+        <insert tableName="category">
+            <column name="category_name" value="Go"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

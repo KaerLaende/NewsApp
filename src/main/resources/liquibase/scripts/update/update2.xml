@@ -1,0 +1,89 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="insert_news" author="Kaer">
+
+        <!-- Java -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования Java"/>
+            <column name="content" value="Java – объектно-ориентированный язык программирования, разработанный компанией Sun Microsystems (в последующем приобретённой компанией Oracle)."/>
+            <column name="publish_date" value="1995-05-23"/>
+            <column name="category_id" value="1"/>
+        </insert>
+
+        <!-- Python -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования Python"/>
+            <column name="content" value="Python – высокоуровневый язык программирования общего назначения с динамической типизацией и автоматическим управлением памятью."/>
+            <column name="publish_date" value="1991-02-20"/>
+            <column name="category_id" value="2"/>
+        </insert>
+
+        <!-- JavaScript -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования JavaScript"/>
+            <column name="content" value="JavaScript – язык программирования, который широко используется для разработки веб-приложений и динамических веб-страниц."/>
+            <column name="publish_date" value="1995-12-04"/>
+            <column name="category_id" value="3"/>
+        </insert>
+
+        <!-- C++ -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования C++"/>
+            <column name="content" value="C++ – язык программирования, являющийся расширением языка C и предоставляющий более высокий уровень абстракции и возможности объектно-ориентированного программирования."/>
+            <column name="publish_date" value="1983-01-01"/>
+            <column name="category_id" value="4"/>
+        </insert>
+
+        <!-- C# -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования C#"/>
+            <column name="content" value="C# – язык программирования, разработанный компанией Microsoft, который широко используется для создания приложений под платформу .NET."/>
+            <column name="publish_date" value="2000-07-01"/>
+            <column name="category_id" value="5"/>
+        </insert>
+
+        <!-- PHP -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования PHP"/>
+            <column name="content" value="PHP – скриптовый язык программирования, который широко используется для разработки веб-приложений и динамических веб-страниц."/>
+            <column name="publish_date" value="1995-06-08"/>
+            <column name="category_id" value="6"/>
+        </insert>
+
+        <!-- Ruby -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования Ruby"/>
+            <column name="content" value="Ruby – динамический, интерпретируемый язык программирования, который придерживается принципов объектно-ориентированного программирования."/>
+            <column name="publish_date" value="1995-12-21"/>
+            <column name="category_id" value="7"/>
+        </insert>
+
+        <!-- Kotlin -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования Kotlin"/>
+            <column name="content" value="Kotlin – статически типизированный язык программирования, разработанный компанией JetBrains, который работает на платформе Java."/>
+            <column name="publish_date" value="2011-07-19"/>
+            <column name="category_id" value="8"/>
+        </insert>
+
+        <!-- Swift -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования Swift"/>
+            <column name="content" value="Swift – язык программирования, разработанный компанией Apple, который используется для создания приложений под платформы iOS, macOS и другие."/>
+            <column name="publish_date" value="2014-06-02"/>
+            <column name="category_id" value="9"/>
+        </insert>
+
+        <!-- Go -->
+        <insert tableName="news">
+            <column name="title" value="Создание языка программирования Go"/>
+            <column name="content" value="Go – компилируемый язык программирования, разработанный компанией Google, который придерживается принципов простоты и эффективности."/>
+            <column name="publish_date" value="2009-11-10"/>
+            <column name="category_id" value="10"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
